@@ -1,0 +1,70 @@
+class ListNode 
+{
+    int val;
+    ListNode next;
+    ListNode(int val) 
+    {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class Demo 
+{
+        public static boolean hasCycle(ListNode head)
+        {
+        if (head == null) 
+        return false;
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) 
+        {
+            slow = slow.next;          // move slow by 1 step
+            fast = fast.next.next;     // move fast by 2 steps
+
+            if (slow == fast) 
+            {
+                return true;          
+            }
+        }
+        return false;                 
+    }
+
+    public static void main(String[] args) 
+    {
+        // linked list with a cycle
+        ListNode n1 = new ListNode(10);
+        ListNode n2 = new ListNode(20);
+        ListNode n3 = new ListNode(30);
+        ListNode n4 = new ListNode(40);
+        ListNode n5 = new ListNode(50);
+
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n5;
+
+        n5.next = n3; // tail points back to 40 
+        System.out.println("Example 1 (with cycle): " + hasCycle(n1)); // true
+
+        // linked list without a cycle 
+        int[] values2 = {6, 4, 2, 8};
+        ListNode[] nodes2 = new ListNode[values2.length];
+
+       
+        for (int i = 0; i < values2.length; i++) 
+        {
+            nodes2[i] = new ListNode(values2[i]);
+        }
+
+        for (int i = 0; i < values2.length - 1; i++) 
+        {
+            nodes2[i].next = nodes2[i + 1];
+        }
+
+        ListNode head2 = nodes2[0];
+        System.out.println("Example 2 (no cycle): " + hasCycle(head2)); // false
+    }
+}
